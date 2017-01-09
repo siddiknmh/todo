@@ -31,6 +31,9 @@ header input{
 	float: left;
 	color: #fff;
 }
+header input:focus{
+	outline: 0;
+}
 header input::-webkit-input-placeholder{
 	color: #fff;
 }
@@ -110,11 +113,11 @@ button.complate:hover{
 #complated button.complate{
 	color: #20A665;
 }
-#complated:not(:empty){
+#complated{
 	padding: 40px 0 0 0;
 	position: relative;
 }
-#complated:not(:empty):before{
+#complated:before{
 	content: '';
 	width: 50%;
 	height: 1px;
@@ -123,5 +126,19 @@ button.complate:hover{
 	top: 20px;
 	left: 25%;
 	/*margin: 0 0 0 -75px;*/
+}
+#todo:empty:after{
+	content: 'You have nothing to-do!';
+	margin-top: 15px;
+}
+#complated:empty:after{
+	content: 'You have yet complate any tasks.';
+}
+#todo:after, #complated:after{
+	width: 100%;
+	display: block;
+	text-align: center;
+	font-size: 12px;
+	color: #aaa;
 }
 

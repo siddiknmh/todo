@@ -1,7 +1,10 @@
-/*
-parentNode, removeChild, insertBefore,  createElement
 
-*/
+var data = {
+	todo: [],
+	complated: []
+};
+
+
 
 
 // Remove and complate icon in fontawosome version
@@ -16,12 +19,29 @@ document.getElementById('add').addEventListener('click', function(){
 		addItemToDo(value);
 		document.getElementById('item').value = '';
 
+		data.todo.push(value);
 	} 
+
+	dataObjectUpdated();
 });
+
+function dataObjectUpdated(){
+	console.log(data);
+}
 
 function removeItem(){
 	var item = this.parentNode.parentNode;
 	var parent = item.parentNode;
+	var id = parent.id;
+	var value = item.innerText;
+
+	if (id == 'todo') {
+		data.todo.splice(data.todo.indexOf(value), 1);
+	}else{
+		data.complated.splice(data.todo.indexOf(value), 1);
+	}
+
+	dataObjectUpdated();
 
 	parent.removeChild(item);
 }
@@ -30,7 +50,23 @@ function complateItem(){
 	var item = this.parentNode.parentNode;
 	var parent = item.parentNode;
 	var id = parent.id;
+	var value = item.innerText;
 
+	
+
+
+	if (id == 'todo') {
+		data.todo.splice(data.todo.indexOf(value), 1);
+		data.complated.push(value);
+	}else{
+		data.complated.splice(data.todo.indexOf(value), 1);
+		data.todo.push(value);
+	}
+
+	dataObjectUpdated();
+
+
+	// Check if the item shold be added to the complated list or to re-added to the todo list
 	var target = (id == 'todo') ? document.getElementById('complated') : document.getElementById('todo');
 
 	parent.removeChild(item);
