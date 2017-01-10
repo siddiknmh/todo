@@ -1,9 +1,8 @@
 
-var data = {
+var data = (localStorage.getItem('toDoList')) ? JSON.parse(localStorage.getItem('toDoList')) : {
 	todo: [],
 	complated: []
 };
-
 
 
 
@@ -11,22 +10,56 @@ var data = {
 var removeIcon = '<i class="fa fa-trash-o" aria-hidden="true"></i>';
 var complateIcon = '<i class="fa fa-check-circle-o" aria-hidden="true"></i>';
 
+
+randerToDoList();
+
 // User clicked on the add button
 // If there have any text inside of item field, add that text in to do list
 document.getElementById('add').addEventListener('click', function(){
 	var value = document.getElementById('item').value;
 	if (value){
-		addItemToDo(value);
-		document.getElementById('item').value = '';
 
-		data.todo.push(value);
+		addItem(value)
+
 	} 
 
 	dataObjectUpdated();
 });
 
+document.getElementById('item').addEventListener('keydown', function(e){
+	var value = this.value;
+
+	if(e.code === 'Enter' && value){
+		addItem(value);
+	}
+});
+
+
+function addItem(value){
+	addItemToDo(value);
+	document.getElementById('item').value = '';
+
+	data.todo.push(value);
+}
+
+
+function randerToDoList(){
+	if (!data.todo.length && !data.complated.length) return;
+
+	for(var i = 0; i < data.todo.length; i++) {
+		var value = data.todo[i];
+		addItemToDo(value);
+	}
+
+	for(var j = 0;  j < data.complated.length; j++) {
+		var value = data.complated[j];
+		addItemToDo(value, true);
+	}
+}
+
+
 function dataObjectUpdated(){
-	console.log(data);
+	localStorage.setItem('toDoList', JSON.stringify(data));
 }
 
 function removeItem(){
@@ -75,8 +108,8 @@ function complateItem(){
 }
 
 // Add a new item to the to do list
-function addItemToDo(text){
-	var list = document.getElementById('todo');
+function addItemToDo(text, complated){
+	var list = (complated) ? document.getElementById('complated') : document.getElementById('todo');
 
 	var item = document.createElement('li');
 	item.innerText = text;
