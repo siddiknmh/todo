@@ -1,9 +1,15 @@
+/**
+ * To Do List V-1.0.0
+ * Copyright 2016 AB Siddik
+ */
 
+/**
+* @ Store data in localstorage
+*/
 var data = (localStorage.getItem('toDoList')) ? JSON.parse(localStorage.getItem('toDoList')) : {
 	todo: [],
 	complated: []
 };
-
 
 
 /**
@@ -22,10 +28,9 @@ randerToDoList();
 */
 document.getElementById('add').addEventListener('click', function(){
 	var value = document.getElementById('item').value;
+
 	if (value){
-
 		addItem(value)
-
 	} 
 
 	dataObjectUpdated();
@@ -41,6 +46,8 @@ document.getElementById('item').addEventListener('keydown', function(e){
 	if(e.code === 'Enter' && value){
 		addItem(value);
 	}
+
+	dataObjectUpdated();
 });
 
 
